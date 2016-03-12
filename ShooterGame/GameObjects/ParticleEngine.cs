@@ -111,16 +111,14 @@ namespace ShooterGame.GameObjects
                         direction = new Vector2(-(float)_random.NextDouble(), (float)_random.NextDouble());
                     } while (direction == Vector2.Zero);
                     particle.Direction = direction;
-                    do
-                    {
-                        particle.Scale = (float)_random.NextDouble();
-                    } while (particle.Scale < .15f || particle.Scale > .85f);
+                   
+                    particle.Scale = (float)_random.NextDouble();
 
                     float speed;
                     do
                     {
                         speed = (float)_random.NextDouble();
-                    } while (speed < 0.2f);
+                    } while (speed < 0.3f);
                     particle.Speed = speed * .5f + Game.Settings.SnowSpeed;
                 }
             }

@@ -69,7 +69,7 @@ namespace ShooterGame.GameObjects.SpriteObjects
         /// <summary>
         /// Holds texture to draw.
         /// </summary>
-        protected virtual Texture2D Texture { get; set; }
+        public virtual Texture2D Texture { get; protected set; }
 
         /// <summary>
         /// Objects position on screen space.

@@ -48,5 +48,13 @@ namespace ShooterGame.Utilities
         {
             get { return .5f; }
         }
+
+        /// <summary>
+        /// Asteroid speed.
+        /// </summary>
+        public float AsteroidSpeed
+        {
+            get { return .1f; }
+        }
     }
 }

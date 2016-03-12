@@ -21,7 +21,8 @@ namespace ShooterGame
             ILoader loader = new Loader();
             ISettings settings = new Settings();
             ISpawnTimes spawnTimes = new SpawnTimes();
-            using (var game = new Game1(loader, settings, spawnTimes))
+            ILayerDepth layerDepth = new LayerDepth();
+            using (var game = new Game1(loader, settings, spawnTimes, layerDepth))
             {
                 game.Run();
             }

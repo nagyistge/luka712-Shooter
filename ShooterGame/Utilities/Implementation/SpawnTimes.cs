@@ -11,9 +11,20 @@ namespace ShooterGame.Utilities.Implementation
     /// </summary>
     public class SpawnTimes : ISpawnTimes
     {
+        /// <summary>
+        /// Snow particle spawn time.
+        /// </summary>
         public float SnowParticleSpawnTime
         {
             get { return .25f; }
+        }
+
+        /// <summary>
+        /// Asteroid spawn time.
+        /// </summary>
+        public float AsteroidSpawnTime
+        {
+            get { return 2f; }
         }
     }
 }

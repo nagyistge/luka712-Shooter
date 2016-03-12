@@ -66,6 +66,12 @@ namespace ShooterGame.Utilities
         /// Gets snow texture.
         /// </summary>
         public Texture2D SnowTexture { get; private set; }
+
+        /// <summary>
+        /// Returns asteroids textures with info.
+        /// </summary>
+        public TextArrayInfo AsteroidTextures { get; private set; }
+ 
        
         #endregion
 
@@ -99,6 +105,14 @@ namespace ShooterGame.Utilities
             SnowTexture = new Texture2D(graphicsDevice, SNOW_RADIUS * 2, SNOW_RADIUS * 2);
             SnowTexture.SetData<Color>(SnowData());
 
+            var asteroidTextures = new Texture2D[6];
+            asteroidTextures[0] = contentManager.Load<Texture2D>("meteorBrown_big2");
+            asteroidTextures[1] = contentManager.Load<Texture2D>("meteorBrown_med1");
+            asteroidTextures[2] = contentManager.Load<Texture2D>("meteorBrown_med3");
+            asteroidTextures[3] = contentManager.Load<Texture2D>("meteorGrey_med1");
+            asteroidTextures[4] = contentManager.Load<Texture2D>("meteorGrey_med2");
+            asteroidTextures[5] = contentManager.Load<Texture2D>("meteorGrey_small1");
+            AsteroidTextures = new TextArrayInfo(asteroidTextures);
         }
 
         #endregion

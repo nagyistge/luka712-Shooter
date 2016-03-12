@@ -33,13 +33,14 @@ namespace ShooterGame
 
         #region Constructors
 
-        public Game1(ILoader loader, ISettings settings, ISpawnTimes spawnTimes)
+        public Game1(ILoader loader, ISettings settings, ISpawnTimes spawnTimes, ILayerDepth layerDepth)
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             Loader = loader;
             Settings = settings;
             SpawnTimes = spawnTimes;
+            LayerDepth = layerDepth;
 
             _graphics.PreferredBackBufferWidth = 800;
             _graphics.PreferredBackBufferHeight = 480;
@@ -74,6 +75,11 @@ namespace ShooterGame
         /// Holds all game settngs... Globals
         /// </summary>
         public ISettings Settings { get; private set; }
+
+        /// <summary>
+        /// Layer depth.
+        /// </summary>
+        public ILayerDepth LayerDepth { get; private set; }
 
         /// <summary>
         /// Gets or sets intro state
@@ -143,7 +149,8 @@ namespace ShooterGame
 
             InputManager.Update();
             IntroState.Update(gameTime);
-            
+
+            if(GameplayState != null) GameplayState.Update(gameTime);
 
             int i = 0;
             for (; i < totalCount; i++)

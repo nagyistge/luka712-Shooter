@@ -61,5 +61,26 @@ namespace ShooterGame.Utilities
         /// Get snow texture.
         /// </summary>
         Texture2D SnowTexture { get; }
+
+        /// <summary>
+        /// Returns asteroid textures info.
+        /// </summary>
+        TextArrayInfo AsteroidTextures { get; }
+    }
+
+
+    /// <summary>
+    /// Holds texture array info.
+    /// </summary>
+    public struct TextArrayInfo
+    {
+        public TextArrayInfo(Texture2D[] texArray)
+        {
+            Textures = texArray;
+            Count = texArray.Length;
+        }
+
+        public Texture2D[] Textures;
+        public int Count;
     }
 }

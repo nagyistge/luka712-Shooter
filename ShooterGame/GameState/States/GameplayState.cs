@@ -4,6 +4,7 @@ using ShooterGame.GameObjects;
 using ShooterGame.GameObjects.SpriteObjects;
 using ShooterGame.GameObjects.SpriteObjects.Animations;
 using ShooterGame.GameObjects.SpriteObjects.Background;
+using ShooterGame.GameObjects.SpriteObjects.Enemies;
 using ShooterGame.GameObjects.SpriteObjects.Player;
 using System;
 using System.Collections.Generic;
@@ -16,19 +17,34 @@ namespace ShooterGame.GameState.States
     {
         #region Fields
 
+        private Random _random;
+
         private MovingBackground[] backgrounds;
         private Player player1;
         private Player player2;
         private ParticleEngine particleEngine;
+        private List<BaseEnemy> enemies;
+
+        // spawn time trackers
+        private float asteroidSpawnTimeTracker = 0f;
 
         #endregion
 
+        #region Constructors
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public GameplayState(Game1 game)
             : base(game)
         {
-
+            _random = new Random();
+            enemies = new List<BaseEnemy>();
         }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>
         /// Initialize gameplay state.
@@ -85,11 +101,24 @@ namespace ShooterGame.GameState.States
                 new SpriteAnimation(Game, Game.Loader.Player2Texture, new Vector2(300, 100), new Vector2(64, 64), 5) { LayerDepth = 0.005f }, new Vector2(300, 100), Game.Settings.PlayerSpeed, Index.Two) { Rotation = (float)Math.PI * .5f };
             Game.GameObjects.Add(player2);
 
+            #endregion
+
+            #region Particles
+
             // Leave particle engine for last, internally particle engine sorts game objects.
             particleEngine = new ParticleEngine(Game);
             Game.GameObjects.Add(particleEngine);
 
             #endregion
+
+        }
+
+        /// <summary>
+        /// Updates gamestate.
+        /// </summary>
+        public void Update(GameTime gameTime)
+        {
+            ActivateEnemyFromPool(gameTime);
         }
 
         /// <summary>
@@ -99,5 +128,45 @@ namespace ShooterGame.GameState.States
         {
             throw new NotImplementedException();
         }
+
+        #endregion
+
+        #region Private Methods
+
+        public void ActivateEnemyFromPool(GameTime gameTime)
+        {
+            // Asteroids 
+            asteroidSpawnTimeTracker += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if(asteroidSpawnTimeTracker > Game.SpawnTimes.AsteroidSpawnTime)
+            {
+                asteroidSpawnTimeTracker = 0f;
+                var asteroid = enemies.Where(x => x is Asteroid && !x.Active).FirstOrDefault();
+
+                // Get new position
+                float xPos = Game.Window.ClientBounds.Width *1.1f;
+                float yPos = _random.Next(50,
+                    (int)(Game.Window.ClientBounds.Height - 50));
+                if(asteroid != null)
+                {
+                    // Reset asteroid
+                    asteroid.Active = true;
+
+                    asteroid.Position = new Vector2(xPos, yPos);
+
+                    asteroid.Speed = Game.Settings.AsteroidSpeed;
+                }
+                else
+                {
+                    asteroid = new Asteroid(Game,
+                        Game.Loader.AsteroidTextures.Textures[_random.Next(Game.Loader.AsteroidTextures.Count)],
+                        new Vector2(xPos, yPos), Game.Settings.AsteroidSpeed) 
+                        { LayerDepth = Game.LayerDepth.EnemyLayerDepth };
+                    enemies.Add(asteroid);
+                    Game.GameObjects.AddGameObject(asteroid);
+                }
+            }
+        }
+
+        #endregion
     }
 }

@@ -5,8 +5,12 @@ using System.Text;
 
 namespace ShooterGame.Utilities.Interface
 {
+    /// <summary>
+    /// Spawn times contract.
+    /// </summary>
     public interface ISpawnTimes
     {
         float SnowParticleSpawnTime { get; }
-    }
+        float AsteroidSpawnTime { get; }
+     }
 }

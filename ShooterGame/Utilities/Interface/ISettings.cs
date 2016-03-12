@@ -13,5 +13,6 @@ namespace ShooterGame.Utilities
         float[] BackgroundSpeed { get; }
         float PlayerSpeed { get; }
         float SnowSpeed { get; }
+        float AsteroidSpeed { get; }
     }
 }
